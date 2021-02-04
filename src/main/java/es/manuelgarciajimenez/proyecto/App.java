@@ -42,8 +42,15 @@ public class App extends Application {
     int enemigo3Y;
     int enemigoVelocidad;
     Random random = new Random();
-    boolean finPartida = false;
+    boolean finPartida;
     Timeline animacionPersonaje;
+    int puntuacion;
+    
+    Image imagenFondo = new Image(getClass().getResourceAsStream("/images/fondo-del-videojuego-horizonte-de-la-ciudad-105360575.jpg"));
+    ImageView verImagen = new ImageView(imagenFondo);
+    Image imagenFondo2 = new Image(getClass().getResourceAsStream("/images/fondo-del-videojuego-horizonte-de-la-ciudad-105360575.jpg"));
+    ImageView verImagen2 = new ImageView(imagenFondo2);
+    
     //Grupo Enemigo 1 
     Group grupoEnemigo = new Group();
     //Grupo Enemigo 2 
@@ -60,21 +67,23 @@ public class App extends Application {
         stage.setScene(escena);
         stage.show();
                
-
+        
+        
+        
         //Fondo imagen
-        Image imagenFondo = new Image(getClass().getResourceAsStream("/images/fondo-del-videojuego-horizonte-de-la-ciudad-105360575.jpg"));
-        ImageView verImagen = new ImageView(imagenFondo);
+        //Image imagenFondo = new Image(getClass().getResourceAsStream("/images/fondo-del-videojuego-horizonte-de-la-ciudad-105360575.jpg"));
+        //ImageView verImagen = new ImageView(imagenFondo);
         verImagen.setLayoutX(fondoPosX);
-        Image imagenFondo2 = new Image(getClass().getResourceAsStream("/images/fondo-del-videojuego-horizonte-de-la-ciudad-105360575.jpg"));
-        ImageView verImagen2 = new ImageView(imagenFondo2);
+        //Image imagenFondo2 = new Image(getClass().getResourceAsStream("/images/fondo-del-videojuego-horizonte-de-la-ciudad-105360575.jpg"));
+        //ImageView verImagen2 = new ImageView(imagenFondo2);
         verImagen2.setLayoutX(fondoPosX2);
 
         pantallaJuego.getChildren().add(verImagen);
         pantallaJuego.getChildren().add(verImagen2);
         
         
-        reinicioJuego();
         
+        reinicioJuego();
         
         //PERSONAJE PRINCIPAL
         //Cuerpo
@@ -231,6 +240,7 @@ public class App extends Application {
         //  timeline
                 animacionPersonaje = new Timeline(
                 new KeyFrame(Duration.seconds(0.017), (ActionEvent ae) -> {
+                    
                     personajeY += personajeVelocidadY;
                     grupoPersonaje.setLayoutY(personajeY);
                     personajeX += personajeVelocidadX;
@@ -246,9 +256,11 @@ public class App extends Application {
                     
                     
                     if (finPartida == false) {
+                        //FIN PARTIDA
                         if (colisionVacia == false) {
                             // System.out.println(finPartida);
                             finPartida = true;
+                            System.out.println(finPartida);
                         }
                         if (colisionVacia2 == false){
                             finPartida = true;
@@ -260,7 +272,7 @@ public class App extends Application {
                         //movimiento enemigo1
                         enemigoX += enemigoVelocidad;
                         grupoEnemigo.setLayoutX(enemigoX);
-
+                        
                         //aparicion aleatoria enemigo1
                         if (enemigoX < -200) {
                             enemigoX = random.nextInt(1600) + escenaTamX;
@@ -276,15 +288,16 @@ public class App extends Application {
                             enemigo2X = random.nextInt(1600) + escenaTamX;
                             grupoEnemigo2.setLayoutX(enemigo2X);
                         }
-
+                        //movimiento enemigo3
                         enemigo3X += enemigoVelocidad;
                         grupoEnemigo3.setLayoutX(enemigo3X);
-
+                        //aparicion aleatoria enemigo3
                         if (enemigo3X < -200) {
                             enemigo3X = random.nextInt(1600) + escenaTamX;
                             grupoEnemigo2.setLayoutX(enemigo3X);
                         }
-
+                        //Puntuacion
+                        
                         fondoPosX -= escenaVelocidad;
                         verImagen.setLayoutX(fondoPosX);
                         fondoPosX2 -= escenaVelocidad;
@@ -341,10 +354,10 @@ public class App extends Application {
                                     break;
                             }
                         });
-
+                        
                         animacionPersonaje.setCycleCount(Timeline.INDEFINITE);
                         animacionPersonaje.play();
-
+                        
                         //Boton suelto
                         escena.setOnKeyReleased((KeyEvent event) -> {
                             personajeVelocidadX = 0;
@@ -386,12 +399,15 @@ public class App extends Application {
                 animacionPersonaje.play();
     }
 
-    public void reinicioJuego() {        
+    public void reinicioJuego() {               
+        //Variables 
         personajeX=70;
         personajeY=70;
         personajeVelocidadY = 0;
         personajeVelocidadX = 0;
         escenaVelocidad = 4;
+        fondoPosX = 0;
+        fondoPosX2 = 800;
         enemigoX = 800;
         enemigoY = 10;
         enemigo2X = 800;
@@ -399,16 +415,34 @@ public class App extends Application {
         enemigo3X = 800;
         enemigo3Y = 110;
         enemigoVelocidad = -5;
-               
+        
+        
+        verImagen.setLayoutX(fondoPosX);
+        verImagen2.setLayoutX(fondoPosX2);
+        
         //Mover enemigo en la escena
         grupoEnemigo.setLayoutX(enemigoX);
         grupoEnemigo.setLayoutY(enemigoY);
         
+        //Mover enemigo 2 en la escena
+        grupoEnemigo2.setLayoutX(enemigoX);
+        grupoEnemigo2.setLayoutY(enemigoY);
+
+        //Mover enemigo 3 en la escena
+        grupoEnemigo3.setLayoutX(enemigoX);
+        grupoEnemigo3.setLayoutY(enemigoY);
+       
         //Distancia Random Enemigos
         enemigoX = random.nextInt(1600) + escenaTamX;
         enemigo2X = random.nextInt(1600) + escenaTamX;
         enemigo3X = random.nextInt(1600) + escenaTamX;
-
+        
+        enemigoX += enemigoVelocidad;
+        grupoEnemigo.setLayoutX(enemigoX);
+        System.out.println(enemigoX);
+                     
+        finPartida = false;
+                                      
     }
     
     
