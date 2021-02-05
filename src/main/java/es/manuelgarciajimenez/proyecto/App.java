@@ -5,16 +5,20 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -44,7 +48,8 @@ public class App extends Application {
     Random random = new Random();
     boolean finPartida;
     Timeline animacionPersonaje;
-    int puntuacion;
+    int puntuacion=0;
+    int tamañoTexto=50;
     
     Image imagenFondo = new Image(getClass().getResourceAsStream("/images/fondo-del-videojuego-horizonte-de-la-ciudad-105360575.jpg"));
     ImageView verImagen = new ImageView(imagenFondo);
@@ -84,6 +89,41 @@ public class App extends Application {
         
         
         reinicioJuego();
+        //Layouts Pantalla
+        
+        //Layout principal
+        HBox panePuntuacion = new HBox();
+        //panePuntuacion.setTranslateX(50);
+        panePuntuacion.setTranslateY(10);
+        panePuntuacion.setMinWidth(escenaTamX);
+        panePuntuacion.setAlignment(Pos.CENTER);
+        panePuntuacion.setSpacing(100);
+        pantallaJuego.getChildren().add(panePuntuacion);
+        
+        //Layout puntuacion actual
+        HBox panePuntuacionActual = new HBox();
+        panePuntuacionActual.setTranslateX(150);
+        panePuntuacionActual.setTranslateY(12);
+        panePuntuacionActual.setSpacing(10);
+        pantallaJuego.getChildren().add(panePuntuacionActual);
+        
+        //Texto puntuacion actual
+        Text textoPuntuacion = new Text ("Puntuación:");
+        textoPuntuacion.setLayoutX(30);
+        textoPuntuacion.setFont(Font.font(40));
+        textoPuntuacion.setFill(Color.GREEN);
+        
+        panePuntuacionActual.getChildren().add(textoPuntuacion);
+        
+        //Texto Puntuacion
+        Text textoPuntuacionActual = new Text ("0");
+        textoPuntuacionActual.setFont(Font.font(tamañoTexto));
+        textoPuntuacionActual.setFill(Color.GREEN);
+        
+        panePuntuacion.getChildren().add(textoPuntuacionActual);
+        
+        
+        
         
         //PERSONAJE PRINCIPAL
         //Cuerpo
@@ -224,6 +264,8 @@ public class App extends Application {
         //mover enemigo 3 en la escena
         grupoEnemigo3.setLayoutX(enemigo3X);
         grupoEnemigo3.setLayoutY(enemigo3Y);
+        
+
 
         //Mostrarlo en patalla
         pantallaJuego.getChildren().add(grupoPersonaje);
@@ -237,10 +279,10 @@ public class App extends Application {
         enemigo3X = random.nextInt(1600) + escenaTamX;
 
         //Movimiento del personaje
-        //  timeline
+                //timeline
                 animacionPersonaje = new Timeline(
                 new KeyFrame(Duration.seconds(0.017), (ActionEvent ae) -> {
-                    
+                    //System.out.println("Dentro del timeline");
                     personajeY += personajeVelocidadY;
                     grupoPersonaje.setLayoutY(personajeY);
                     personajeX += personajeVelocidadX;
@@ -256,11 +298,12 @@ public class App extends Application {
                     
                     
                     if (finPartida == false) {
+                        //System.out.println("En partida");
                         //FIN PARTIDA
                         if (colisionVacia == false) {
                             // System.out.println(finPartida);
                             finPartida = true;
-                            System.out.println(finPartida);
+                            //System.out.println(finPartida);
                         }
                         if (colisionVacia2 == false){
                             finPartida = true;
@@ -271,12 +314,14 @@ public class App extends Application {
                         //movimientos enemigos
                         //movimiento enemigo1
                         enemigoX += enemigoVelocidad;
+                        //System.out.println("EnemigoX:"+ enemigoX);
+                        //System.out.println("enemigoVelocidad:"+enemigoVelocidad);
                         grupoEnemigo.setLayoutX(enemigoX);
                         
                         //aparicion aleatoria enemigo1
                         if (enemigoX < -200) {
                             enemigoX = random.nextInt(1600) + escenaTamX;
-                            grupoEnemigo.setLayoutX(enemigoX);
+                            grupoEnemigo.setLayoutX(enemigoX);                            
                         }
 
                         //movimiento enemigo2
@@ -296,7 +341,32 @@ public class App extends Application {
                             enemigo3X = random.nextInt(1600) + escenaTamX;
                             grupoEnemigo2.setLayoutX(enemigo3X);
                         }
+                        //Puntuacion enemigoX
+                        if(personajeX>=enemigoX && personajeX<enemigoX-enemigoVelocidad){                            
+                            puntuacion++;
+                            System.out.println("punto");                            
+                        }
+                        
+                        if(personajeX>=enemigo2X){
+                            puntuacion++;
+                        }
+                        if (personajeX>=enemigo3X){
+                            puntuacion++;
+                        }
+                        
+                        //enemigo negro coincide con verde
+                        //if (enemigoX-enemigo3X>30 AND enemigoX){
+                        //    enemigoX = random.nextInt(1600) + escenaTamX;
+                        //    grupoEnemigo.setLayoutX(enemigoX);
+                        //}
+                        //if (enemigo2X-enemigo3X>50){
+                        //    enemigo2X = random.nextInt(1600) + escenaTamX;
+                        //   grupoEnemigo.setLayoutX(enemigo2X);
+                        //}
                         //Puntuacion
+                        
+                        
+                        //Movimiento Escena
                         
                         fondoPosX -= escenaVelocidad;
                         verImagen.setLayoutX(fondoPosX);
@@ -367,6 +437,7 @@ public class App extends Application {
                     } //fin partida
 
                     if (finPartida == true) {
+                        //System.out.println("Muerto");
                         escena.setOnKeyPressed((KeyEvent event) -> {
                             switch (event.getCode()) {
                                 //Tecla Arriba
@@ -388,8 +459,7 @@ public class App extends Application {
                                 case ESCAPE:
                                     reinicioJuego();
                             }
-                            enemigoVelocidad = 0;
-                            escenaVelocidad = 0;
+                            
                         });
                     }
                 }
@@ -415,8 +485,9 @@ public class App extends Application {
         enemigo3X = 800;
         enemigo3Y = 110;
         enemigoVelocidad = -5;
-        
-        
+        puntuacion=0;
+                                       
+        //Escena
         verImagen.setLayoutX(fondoPosX);
         verImagen2.setLayoutX(fondoPosX2);
         
@@ -425,21 +496,20 @@ public class App extends Application {
         grupoEnemigo.setLayoutY(enemigoY);
         
         //Mover enemigo 2 en la escena
-        grupoEnemigo2.setLayoutX(enemigoX);
-        grupoEnemigo2.setLayoutY(enemigoY);
+        grupoEnemigo2.setLayoutX(enemigo2X);
+        grupoEnemigo2.setLayoutY(enemigo2Y);
+        
 
         //Mover enemigo 3 en la escena
-        grupoEnemigo3.setLayoutX(enemigoX);
-        grupoEnemigo3.setLayoutY(enemigoY);
-       
+        grupoEnemigo3.setLayoutX(enemigo3X);
+        grupoEnemigo3.setLayoutY(enemigo3Y);
+        
         //Distancia Random Enemigos
         enemigoX = random.nextInt(1600) + escenaTamX;
         enemigo2X = random.nextInt(1600) + escenaTamX;
         enemigo3X = random.nextInt(1600) + escenaTamX;
+                             
         
-        enemigoX += enemigoVelocidad;
-        grupoEnemigo.setLayoutX(enemigoX);
-        System.out.println(enemigoX);
                      
         finPartida = false;
                                       
