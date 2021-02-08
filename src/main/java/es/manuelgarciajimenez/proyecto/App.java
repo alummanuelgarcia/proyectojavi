@@ -28,8 +28,8 @@ import javafx.util.Duration;
 public class App extends Application {
 
     Pane pantallaJuego = new Pane();
-    final int escenaTamX = 800;
-    final int escenaTamY = 500;
+    int escenaTamX = 800;
+    int escenaTamY = 500;
     int personajeX;
     int personajeY;
     Scene escena = new Scene(pantallaJuego, escenaTamX, escenaTamY);
@@ -80,27 +80,23 @@ public class App extends Application {
         stage.setResizable(false);
         stage.setScene(escena);
         stage.show();
-               
-        
-        
-        
+                                     
         //Fondo imagen
-        //Image imagenFondo = new Image(getClass().getResourceAsStream("/images/fondo-del-videojuego-horizonte-de-la-ciudad-105360575.jpg"));
-        //ImageView verImagen = new ImageView(imagenFondo);
+        
         verImagen.setLayoutX(fondoPosX);
-        //Image imagenFondo2 = new Image(getClass().getResourceAsStream("/images/fondo-del-videojuego-horizonte-de-la-ciudad-105360575.jpg"));
-        //ImageView verImagen2 = new ImageView(imagenFondo2);
+        
         verImagen2.setLayoutX(fondoPosX2);
 
         pantallaJuego.getChildren().add(verImagen);
-        pantallaJuego.getChildren().add(verImagen2);       
+        pantallaJuego.getChildren().add(verImagen2);  
+        
+        //Llamo al metodo reinicio juego para empezar la partida con los valores correspondientes a cada variable
         
         reinicioJuego();
-        
-        
+              
         //Layouts Pantalla
         
-        //Layout principal
+        //Layout  puntuacion principal
         HBox panePuntuacion = new HBox();        
         panePuntuacion.setTranslateY(10);
         panePuntuacion.setMinWidth(escenaTamX);
