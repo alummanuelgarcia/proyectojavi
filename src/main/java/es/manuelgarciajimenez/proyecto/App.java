@@ -306,15 +306,15 @@ public class App extends Application {
         pantallaJuego.getChildren().add(grupoEnemigo3);
 
         //Distancia Random Enemigos
+        
         enemigoX = random.nextInt(1600) + escenaTamX;
-        enemigo2X = random.nextInt(1600) + escenaTamX;
-        enemigo3X = random.nextInt(1600) + escenaTamX;
+        enemigo2X = random.nextInt(1600) + enemigo3X + 400;
+        enemigo3X = random.nextInt(1600) + enemigoX + 350;
 
         //Movimiento del personaje
                 //timeline
                 animacionPersonaje = new Timeline(
-                new KeyFrame(Duration.seconds(0.017), (ActionEvent ae) -> {
-                    //System.out.println("Dentro del timeline");
+                new KeyFrame(Duration.seconds(0.017), (ActionEvent ae) -> {                   
                     personajeY += personajeVelocidadY;
                     grupoPersonaje.setLayoutY(personajeY);
                     personajeX += personajeVelocidadX;
@@ -332,8 +332,7 @@ public class App extends Application {
                     if (finPartida == false) {
                         
                         //FIN PARTIDA
-                        if (colisionVacia == false) {
-                            // System.out.println(finPartida);
+                        if (colisionVacia == false) {                           
                             finPartida = true;                           
                         }
                         if (colisionVacia2 == false){
@@ -352,7 +351,7 @@ public class App extends Application {
                             enemigoX = random.nextInt(1600) + escenaTamX;
                             grupoEnemigo.setLayoutX(enemigoX);                            
                         }
-
+                        
                         //movimiento enemigo2
                         enemigo2X += enemigoVelocidad;
                         grupoEnemigo2.setLayoutX(enemigo2X);
@@ -409,6 +408,9 @@ public class App extends Application {
                         if (puntuacion == 50){
                             enemigoVelocidad=-40;
                         }
+                        
+                        //poner en pantalla puntuacion maxima
+                        
                         if (puntuacion > puntuacionMaxima){
                             puntuacionMaxima = puntuacion;
                             textoPuntuacionMaxima.setText(String.valueOf(puntuacionMaxima));
@@ -551,7 +553,6 @@ public class App extends Application {
         grupoEnemigo2.setLayoutX(enemigo2X);
         grupoEnemigo2.setLayoutY(enemigo2Y);
         
-
         //Mover enemigo 3 en la escena
         grupoEnemigo3.setLayoutX(enemigo3X);
         grupoEnemigo3.setLayoutY(enemigo3Y);
@@ -561,8 +562,7 @@ public class App extends Application {
         enemigo2X = random.nextInt(1600) + enemigo3X + 400;
         enemigo3X = random.nextInt(1600) + enemigoX + 350;
                                                          
-        finPartida = false;
-                                      
+        finPartida = false;                                      
     }
     
     public void textoDerrota(){
