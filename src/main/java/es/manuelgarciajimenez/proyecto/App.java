@@ -49,6 +49,7 @@ public class App extends Application {
     boolean finPartida;
     Timeline animacionPersonaje;
     int puntuacion=0;
+    int puntuacionMaxima=0;
     int tamañoTexto=50;
     
     //ImageView
@@ -69,6 +70,7 @@ public class App extends Application {
     Text textoPerdido = new Text ("Has perdido!!!. ESCAPE para reiniciar");
     //TEXTO PUNTUACION
     Text textoPuntuacionActual = new Text ("0");
+    
     
     @Override
     public void start(Stage stage) {
@@ -91,11 +93,11 @@ public class App extends Application {
         verImagen2.setLayoutX(fondoPosX2);
 
         pantallaJuego.getChildren().add(verImagen);
-        pantallaJuego.getChildren().add(verImagen2);
-        
-        
+        pantallaJuego.getChildren().add(verImagen2);       
         
         reinicioJuego();
+        
+        
         //Layouts Pantalla
         
         //Layout principal
@@ -127,6 +129,33 @@ public class App extends Application {
         textoPuntuacionActual.setFill(Color.GREEN);
                         
         panePuntuacion.getChildren().add(textoPuntuacionActual);
+        
+        //PUNTUACION MAXIMA
+        HBox paneMaxima = new HBox();        
+        paneMaxima.setTranslateY(400);
+        paneMaxima.setTranslateX(50);
+        paneMaxima.setSpacing(10);
+        pantallaJuego.getChildren().add(paneMaxima);
+        
+        Text textoMaxima = new Text ("Puntuación Máxima:");
+        textoMaxima.setLayoutX(10);
+        textoMaxima.setFont(Font.font(30));
+        textoMaxima.setFill(Color.GREEN);
+        
+        paneMaxima.getChildren().add(textoMaxima);
+        
+        HBox panePuntuacionMaxima = new HBox();        
+        panePuntuacionMaxima.setTranslateY(400);
+        panePuntuacionMaxima.setTranslateX(100);
+        panePuntuacionMaxima.setSpacing(10);
+        pantallaJuego.getChildren().add(panePuntuacionMaxima);
+        
+        Text textoPuntuacionMaxima = new Text ("0");
+        textoPuntuacionMaxima.setLayoutX(10);
+        textoPuntuacionMaxima.setFont(Font.font(30));
+        textoPuntuacionMaxima.setFill(Color.GREEN);
+        
+        paneMaxima.getChildren().add(textoPuntuacionMaxima);
                                
         //PERSONAJE PRINCIPAL
         //Cuerpo
@@ -330,7 +359,7 @@ public class App extends Application {
 
                         //aparicion aleatoria enemigo2
                         if (enemigo2X < -60) {
-                            enemigo2X = random.nextInt(1600) + escenaTamX;
+                            enemigo2X = random.nextInt(1600) + enemigo3X + 300;
                             grupoEnemigo2.setLayoutX(enemigo2X);
                         }
                         //movimiento enemigo3
@@ -339,7 +368,7 @@ public class App extends Application {
                         
                         //aparicion aleatoria enemigo3
                         if (enemigo3X < -200) {
-                            enemigo3X = random.nextInt(1600) + escenaTamX;
+                            enemigo3X = random.nextInt(1600) + enemigoX + 350;
                             grupoEnemigo2.setLayoutX(enemigo3X);
                         }
                         //Puntuacion enemigoX
@@ -364,34 +393,26 @@ public class App extends Application {
                         }
                         if (puntuacion == 10){
                             enemigoVelocidad = -9;                          
-                        }
-                        
+                        }                        
                         if (puntuacion == 15){
                             enemigoVelocidad = -11;
                         }
                         if (puntuacion == 20){
                             enemigoVelocidad=-15;
                         }
-                        if (puntuacion == 25){
+                        if (puntuacion == 30){
                             enemigoVelocidad=-20;
                         }
-                        System.out.println(puntuacion);
-                        
-                        
-                        
-                        //enemigo negro coincide con verde
-                        if (enemigoX-enemigo3X>30 + enemigoX){
-                            enemigoX = random.nextInt(1600) + escenaTamX;
-                            grupoEnemigo.setLayoutX(enemigoX);
+                        if (puntuacion == 40){
+                            enemigoVelocidad=-25;
                         }
-                        //enemigo verde coincide edificio
-                        //if (enemigo2X-enemigo3X>100){
-                        //    enemigo2X = random.nextInt(1600) + escenaTamX;
-                        //    grupoEnemigo.setLayoutX(enemigo2X);
-                        //}
-                        //Puntuacion
-                        
-                        
+                        if (puntuacion == 50){
+                            enemigoVelocidad=-40;
+                        }
+                        if (puntuacion > puntuacionMaxima){
+                            puntuacionMaxima = puntuacion;
+                            textoPuntuacionMaxima.setText(String.valueOf(puntuacionMaxima));
+                        }                                                                                                                
                         //Movimiento Escena
                         
                         fondoPosX -= escenaVelocidad;
@@ -537,8 +558,8 @@ public class App extends Application {
         
         //Distancia Random Enemigos
         enemigoX = random.nextInt(1600) + escenaTamX;
-        enemigo2X = random.nextInt(1600) + escenaTamX;
-        enemigo3X = random.nextInt(1600) + escenaTamX;
+        enemigo2X = random.nextInt(1600) + enemigo3X + 300;
+        enemigo3X = random.nextInt(1600) + enemigoX + 350;
                                                          
         finPartida = false;
                                       
