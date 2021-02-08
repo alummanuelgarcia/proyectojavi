@@ -133,7 +133,7 @@ public class App extends Application {
         //PUNTUACION MAXIMA
         HBox paneMaxima = new HBox();        
         paneMaxima.setTranslateY(400);
-        paneMaxima.setTranslateX(50);
+        paneMaxima.setTranslateX(150);
         paneMaxima.setSpacing(10);
         pantallaJuego.getChildren().add(paneMaxima);
         
@@ -359,7 +359,7 @@ public class App extends Application {
 
                         //aparicion aleatoria enemigo2
                         if (enemigo2X < -60) {
-                            enemigo2X = random.nextInt(1600) + enemigo3X + 300;
+                            enemigo2X = random.nextInt(1600) + enemigo3X + 400;
                             grupoEnemigo2.setLayoutX(enemigo2X);
                         }
                         //movimiento enemigo3
@@ -558,7 +558,7 @@ public class App extends Application {
         
         //Distancia Random Enemigos
         enemigoX = random.nextInt(1600) + escenaTamX;
-        enemigo2X = random.nextInt(1600) + enemigo3X + 300;
+        enemigo2X = random.nextInt(1600) + enemigo3X + 400;
         enemigo3X = random.nextInt(1600) + enemigoX + 350;
                                                          
         finPartida = false;
