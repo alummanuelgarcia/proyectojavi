@@ -136,7 +136,7 @@ public class App extends Application {
         Text textoMaxima = new Text ("Puntuación Máxima:");
         textoMaxima.setLayoutX(10);
         textoMaxima.setFont(Font.font(30));
-        textoMaxima.setFill(Color.GREEN);
+        textoMaxima.setFill(Color.WHITE);
         
         paneMaxima.getChildren().add(textoMaxima);
         
@@ -149,7 +149,7 @@ public class App extends Application {
         Text textoPuntuacionMaxima = new Text ("0");
         textoPuntuacionMaxima.setLayoutX(10);
         textoPuntuacionMaxima.setFont(Font.font(30));
-        textoPuntuacionMaxima.setFill(Color.GREEN);
+        textoPuntuacionMaxima.setFill(Color.WHITE);
         
         paneMaxima.getChildren().add(textoPuntuacionMaxima);
                                
